@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+
+{% block main %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">To Dos</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Update your to-do</p>
+    </div>
+  </div>
+
+<div class="content">
+    <form action="/update/{{todo_id}}/{{title}}/{{content}}" method="POST" style="display: inline;">
+        <input type="text" name="title" id="title" value="{{title}}">
+        <input type="text" name="content" id="content" value="{{content}}">
+        <button class="btn"><i class="fa fa-check"></i></button>
+    </form>
+    <button id=close class="btn" onclick="location.href='/'"><i class="fa fa-close"></i></button>
+</div>
+
+{% endblock %}
