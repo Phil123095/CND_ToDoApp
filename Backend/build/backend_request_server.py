@@ -44,20 +44,31 @@ def create_todo():
 
 @app.route("/update-todo", methods=["POST"])
 def update_todo():
-    todo_request = request.json
-    todo_item = ToDo.from_dict(todo_request)
-    ID = todo_item.ID
-    todo_ref = fs_db.collection('AllToDo').document(str(ID))
-    todo_ref.update(todo_item.to_dict())
-    return
+    try:
+        todo_request = request.json
+        todo_item = ToDo.from_dict(todo_request)
+        ID = todo_item.ID
+        todo_ref = fs_db.collection('AllToDo').document(str(ID))
+        todo_ref.update(todo_item.to_dict())
+        return "success"
+    except Exception:
+        return "failed"
 
 
 @app.route("/delete-todo", methods=["POST"])
 def delete_todo():
     todo_request = request.json
-    todo_ID = todo_request['ID']
-    fs_db.collection('AllToDo').document(todo_ID).delete()
-    return
+    try:
+        todo_ID = todo_request['ID']
+    except KeyError:
+        return "Please provide the ID of the to-do item for it to be deleted."
+
+    try:
+        fs_db.collection('AllToDo').document(todo_ID).delete()
+        return "Item successfully deleted"
+    except Exception:
+        return "Item does not exist"
+
 
 
 if __name__ == '__main__':

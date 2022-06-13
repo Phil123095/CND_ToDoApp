@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta, timezone
 import urllib.request, json, requests
+import os
 
 
 todo = Flask(__name__)
@@ -11,8 +12,7 @@ def index():
     response = urllib.request.urlopen("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")
     data = response.read()
     dict = json.loads(data)
-    edit = False
-    return render_template("base.html", todos=dict["list"], edit=edit)
+    return render_template("base.html", todos=dict["list"])
 
 @todo.route("/save", methods=["POST"])
 def save():
@@ -43,4 +43,5 @@ def delete(todo_id):
     return redirect(url_for("index"))
 
 
-todo.run(debug=True)
+if __name__ == '__main__':
+    todo.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
