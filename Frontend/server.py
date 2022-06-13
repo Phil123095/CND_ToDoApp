@@ -2,14 +2,22 @@ from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta, timezone
 import urllib.request, json, requests
 import os
+import google.auth.transport.requests
+import google.oauth2.id_token
 
 
 todo = Flask(__name__)
 todo.config["SECRET_KEY"] = "group1lovescoding"
+audience = "https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/"
 
 @todo.route("/",  methods=["GET","POST"])
 def index():
-    response = urllib.request.urlopen("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")
+    req = urllib.request.Request("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")
+    auth_req = google.auth.transport.request.Request()
+    id_token = google.oauth2.id_token.fetch_id_token(auth_req, audience)
+    req.add_header("Authorization", f"Bearer {id_token}")
+    response = urllib.request.urlopen(req)
+    # response = urllib.request.urlopen("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")
     data = response.read()
     dict = json.loads(data)
     return render_template("base.html", todos=dict["list"])
