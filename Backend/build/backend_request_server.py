@@ -4,7 +4,8 @@ from google.cloud import firestore
 from ToDo_Class import ToDo
 
 app = Flask(__name__)
-fs_db = firestore.Client.from_service_account_json('firestore_key.json')
+# fs_db = firestore.Client.from_service_account_json('firestore_key.json')
+fs_db = firestore.Client()
 
 
 @app.route("/list-all", methods=["GET"])
