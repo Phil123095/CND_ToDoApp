@@ -51,7 +51,7 @@ def update(todo_id, title, content):
 
 @todo.route("/delete/<todo_id>", methods=['GET', "POST"])
 def delete(todo_id):
-    #last_updated = datetime.now(timezone.utc) --> when i update the created time also changes
+    # last_updated = datetime.now(timezone.utc) --> when i update the created time also changes
     msg = {'ID': todo_id}
     res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/delete-todo', json=msg)
     return redirect(url_for("index"))
