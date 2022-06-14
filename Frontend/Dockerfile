@@ -8,10 +8,10 @@ ENV PYTHONUNBUFFERED True
 # Copy local code to the container image.
 ENV APP_HOME /app
 WORKDIR $APP_HOME
-COPY server.py ./
-COPY static/ ./static
-COPY templates/ ./templates
-COPY requirements.txt ./
+COPY Frontend/server.py ./
+COPY Frontend/static/ ./static
+COPY Frontend/templates/ ./templates
+COPY Frontend/requirements.txt ./
 ENV PORT=5000
 
 # Install production dependencies.
