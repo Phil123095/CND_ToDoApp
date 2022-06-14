@@ -30,6 +30,7 @@ jobs:
 
         - name: Create temp json secret file
           run: echo -e '${{ secrets.FIRESTORE_KEY }}' >> firestore_key.json
+          working-directory: Backend/build
 
         - name: Build Docker image
           run: docker build . -t $IMAGE_NAME
