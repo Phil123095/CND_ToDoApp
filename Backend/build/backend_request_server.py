@@ -36,7 +36,6 @@ def create_todo():
     todo_request = request.json
     todo_item = ToDo.from_dict(todo_request)
     ID = todo_item.ID
-    #todo_request = request.json
     fs_db.collection('AllToDo').document(str(ID)).set(todo_item.to_dict())
     print(todo_item)
     return {'ID': ID}
