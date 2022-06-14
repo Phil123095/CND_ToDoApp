@@ -14,7 +14,7 @@ if local:
 
 app = Flask(__name__)
 
-fs_db = firestore.Client.from_service_account_json('cnd-todo-project-9e37f1e232a6.json')
+fs_db = firestore.Client.from_service_account_json('firestore_key.json')
 
 
 @app.route("/list-all", methods=["GET"])
