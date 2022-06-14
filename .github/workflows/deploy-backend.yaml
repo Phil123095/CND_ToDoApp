@@ -28,6 +28,9 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v2
 
+        - name: Create temp json secret file
+          run: echo -e '${{ secrets.FIRESTORE_KEY }}' >> firestore_key.json
+
         - name: Build Docker image
           run: docker build . -t $IMAGE_NAME
           working-directory: Backend/build
