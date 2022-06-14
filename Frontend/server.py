@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta, timezone
-import urllib
+import urllib.request
 import json, requests
 import os
 import google.auth.transport.requests
