@@ -12,6 +12,7 @@ todo = Flask(__name__)
 todo.config["SECRET_KEY"] = "group1lovescoding"
 audience = "https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/"
 
+
 @todo.route("/",  methods=["GET","POST"])
 def index():
     req = urllib.request.Request("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")
@@ -24,6 +25,7 @@ def index():
     dict = json.loads(data)
     return render_template("base.html", todos=dict["list"])
 
+
 @todo.route("/save", methods=["POST"])
 def save():
     if request.method == 'POST':
@@ -32,6 +34,7 @@ def save():
         msg = {'title': title, 'content': content}
         res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/create-todo', json=msg)
         return redirect(url_for("index"))
+
 
 @todo.route("/update/<todo_id>/<title>/<content>", methods=['GET', "POST"])
 def update(todo_id, title, content):
@@ -44,6 +47,7 @@ def update(todo_id, title, content):
         return redirect(url_for("index"))
     else:
         return render_template("update.html", todo_id=todo_id, title=title, content=content)
+
 
 @todo.route("/delete/<todo_id>", methods=['GET', "POST"])
 def delete(todo_id):
