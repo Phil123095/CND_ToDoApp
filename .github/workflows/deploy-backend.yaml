@@ -32,7 +32,7 @@ jobs:
           run: cd Backend/build
 
         - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME
+          run: docker build . -t $IMAGE_NAME -f Backend/build/Dockerfile
 
         - name: Push Docker image
           run: docker push $IMAGE_NAME
