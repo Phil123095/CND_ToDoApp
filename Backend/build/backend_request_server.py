@@ -1,16 +1,9 @@
 import os
-import dotenv
 from flask import Flask, request
 from google.cloud import firestore
 from ToDo_Class import ToDo
 
-local = True
-
-if local:
-    dotenv.load_dotenv()
-
 app = Flask(__name__)
-
 fs_db = firestore.Client.from_service_account_json('firestore_key.json')
 
 
