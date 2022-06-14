@@ -28,11 +28,9 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v2
 
-        - name: Change Directory
-          run: cd Backend/build
-
         - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME -f Backend/build/Dockerfile
+          run: docker build . -t $IMAGE_NAME
+          working-directory: Backend/build
 
         - name: Push Docker image
           run: docker push $IMAGE_NAME
