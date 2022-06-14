@@ -4,9 +4,6 @@ from flask import Flask, request
 from google.cloud import firestore
 from ToDo_Class import ToDo
 
-import json
-from datetime import datetime, timedelta, timezone
-
 local = True
 
 if local:
