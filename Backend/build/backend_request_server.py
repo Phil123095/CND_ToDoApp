@@ -1,20 +1,10 @@
 import os
-import dotenv
 from flask import Flask, request
 from google.cloud import firestore
 from ToDo_Class import ToDo
 
-import json
-from datetime import datetime, timedelta, timezone
-
-local = True
-
-if local:
-    dotenv.load_dotenv()
-
 app = Flask(__name__)
-
-fs_db = firestore.Client.from_service_account_json('cnd-todo-project-9e37f1e232a6.json')
+fs_db = firestore.Client.from_service_account_json('firestore_key.json', strict=False)
 
 
 @app.route("/list-all", methods=["GET"])
@@ -36,7 +26,6 @@ def create_todo():
     todo_request = request.json
     todo_item = ToDo.from_dict(todo_request)
     ID = todo_item.ID
-    #todo_request = request.json
     fs_db.collection('AllToDo').document(str(ID)).set(todo_item.to_dict())
     print(todo_item)
     return {'ID': ID}
@@ -68,7 +57,6 @@ def delete_todo():
         return "Item successfully deleted"
     except Exception:
         return "Item does not exist"
-
 
 
 if __name__ == '__main__':

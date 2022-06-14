@@ -1,5 +1,5 @@
 *.env
-
+*.json
 api_testing.py
 
 # OS generated files #

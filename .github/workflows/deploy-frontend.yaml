@@ -1,0 +1,39 @@
+name: GH-Actions-Frontend
+
+on:
+  push:
+    paths:
+      - "Frontend/**"
+
+jobs:
+
+    deploy-frontend:
+        name: Setup Gcloud Account
+        runs-on: ubuntu-latest
+        environment: deployment
+        env:
+          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME_FRONTEND }}
+        steps:
+
+        - name: Login
+          uses: google-github-actions/setup-gcloud@v0
+          with:
+            project_id: ${{ secrets.GCP_PROJECT_ID }}
+            service_account_email: ${{ secrets.GCP_EMAIL }}
+            service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+        - name: Configure Docker
+          run: gcloud auth configure-docker --quiet
+
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Build Docker image
+          run: docker build . -t $IMAGE_NAME
+          working-directory: Frontend
+
+        - name: Push Docker image
+          run: docker push $IMAGE_NAME
+
+        - name: Deploy Docker image
+          run: gcloud run deploy ${{ secrets.GCP_APP_NAME_FRONTEND }} --image $IMAGE_NAME --region europe-west6 --platform managed

@@ -5,6 +5,7 @@ Using the example from the Google documentation as a base: https://firebase.goog
 import datetime
 import uuid
 
+
 class ToDo:
     def __init__(self, title, content, ID=None, created_date=None, due_date=None, tags=[], is_done=False):
         self.ID = ID if ID else str(uuid.uuid4())
