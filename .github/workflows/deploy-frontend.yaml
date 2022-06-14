@@ -29,7 +29,8 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME -f Frontend/Dockerfile
+          run: docker build . -t $IMAGE_NAME
+          working-directory: Frontend
 
         - name: Push Docker image
           run: docker push $IMAGE_NAME
