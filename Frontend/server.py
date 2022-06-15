@@ -11,13 +11,12 @@ import google.oauth2.id_token as google_id_token
 todo = Flask(__name__)
 todo.config["SECRET_KEY"] = "group1lovescoding"
 audience = "https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/"
-
+auth_req = google_tp.Request()
+id_token = google_id_token.fetch_id_token(auth_req, audience)
 
 @todo.route("/",  methods=["GET","POST"])
 def index():
     req = urllib.request.Request("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")
-    auth_req = google_tp.Request()
-    id_token = google_id_token.fetch_id_token(auth_req, audience)
     req.add_header("Authorization", f"Bearer {id_token}")
     response = urllib.request.urlopen(req)
     data = response.read()
@@ -31,7 +30,7 @@ def save():
         title = request.form["title"]
         content = request.form["todo"]
         msg = {'title': title, 'content': content}
-        res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/create-todo', json=msg)
+        res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/create-todo', json=msg, headers={"Authorization": f"Bearer {id_token}"})
         return redirect(url_for("index"))
 
 
@@ -42,7 +41,7 @@ def update(todo_id, title, content):
         title = request.form["title"]
         content = request.form["content"]
         msg = {'ID': id, 'title': title, 'content': content}
-        res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/update-todo', json=msg)
+        res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/update-todo', json=msg, headers={"Authorization": f"Bearer {id_token}"})
         return redirect(url_for("index"))
     else:
         return render_template("update.html", todo_id=todo_id, title=title, content=content)
@@ -52,7 +51,7 @@ def update(todo_id, title, content):
 def delete(todo_id):
     # last_updated = datetime.now(timezone.utc) --> when i update the created time also changes
     msg = {'ID': todo_id}
-    res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/delete-todo', json=msg)
+    res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/delete-todo', json=msg, headers={"Authorization": f"Bearer {id_token}"})
     return redirect(url_for("index"))
 
 
