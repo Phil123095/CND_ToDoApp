@@ -14,7 +14,7 @@ def list_all_todos():
     docs = all_to_dos.stream()
 
     list_of_todos = [doc.to_dict() for doc in docs]
-    list_of_todos_sorted = sorted(list_of_todos, key=lambda d: d['created_date'])
+    list_of_todos_sorted = sorted(list_of_todos, key=lambda d: d['created_date'], reverse=True)
     return {'list': list_of_todos_sorted}
 
 
