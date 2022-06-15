@@ -14,12 +14,8 @@ def list_all_todos():
     docs = all_to_dos.stream()
 
     list_of_todos = [doc.to_dict() for doc in docs]
-
-    for doc in docs:
-        todo_item = ToDo.from_dict(doc.to_dict())
-        print(todo_item)
-
-    return {'list': list_of_todos}
+    list_of_todos_sorted = sorted(list_of_todos, key=lambda d: d['created_date'])
+    return {'list': list_of_todos_sorted}
 
 
 @app.route("/create-todo", methods=["POST"])
