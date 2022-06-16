@@ -26,4 +26,4 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Deploy Docker image
-          run: gcloud run deploy ${{ secrets.GCP_APP_NAME_FRONTEND }} --source --region europe-west6 --platform managed
+          run: gcloud run deploy ${{ secrets.GCP_APP_NAME_FRONTEND }} --source . --region europe-west6 --platform managed
