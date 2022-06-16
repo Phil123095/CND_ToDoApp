@@ -9,7 +9,6 @@ ENV PYTHONUNBUFFERED True
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY backend_request_server.py ./
-COPY firestore_key.json ./
 COPY ToDo_Class.py ./
 COPY requirements.txt ./
 
