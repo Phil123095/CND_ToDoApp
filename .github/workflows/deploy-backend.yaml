@@ -22,22 +22,8 @@ jobs:
             service_account_email: ${{ secrets.GCP_EMAIL }}
             service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
-        - name: Configure Docker
-          run: gcloud auth configure-docker --quiet
-
         - name: Checkout repository
           uses: actions/checkout@v2
 
-        - name: Create temp json secret file
-          run: echo -e $'{{ secrets.FIRESTORE_KEY }}' >> firestore_key.json
-          working-directory: Backend/build
-
-        - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME
-          working-directory: Backend/build
-
-        - name: Push Docker image
-          run: docker push $IMAGE_NAME
-
         - name: Deploy Docker image
-          run: gcloud run deploy ${{ secrets.GCP_APP_NAME_BACKEND }} --image $IMAGE_NAME --region europe-west6 --platform managed
+          run: gcloud run deploy ${{ secrets.GCP_APP_NAME_BACKEND }} --source --region europe-west6 --platform managed
