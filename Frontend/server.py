@@ -12,6 +12,7 @@ todo = Flask(__name__)
 todo.config["SECRET_KEY"] = "group1lovescoding"
 audience = "https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/"
 
+
 @todo.route("/",  methods=["GET","POST"])
 def index():
     req = urllib.request.Request("https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/list-all")

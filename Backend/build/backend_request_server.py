@@ -24,7 +24,6 @@ def create_todo():
     todo_item = ToDo.from_dict(todo_request)
     ID = todo_item.ID
     fs_db.collection('AllToDo').document(str(ID)).set(todo_item.to_dict())
-    print(todo_item)
     return {'ID': ID}
 
 
@@ -37,6 +36,7 @@ def update_todo():
         todo_ref = fs_db.collection('AllToDo').document(str(ID))
         todo_ref.update(todo_item.to_dict())
         return "success"
+
     except Exception:
         return "failed"
 
@@ -46,12 +46,14 @@ def delete_todo():
     todo_request = request.json
     try:
         todo_ID = todo_request['ID']
+
     except KeyError:
         return "Please provide the ID of the to-do item for it to be deleted."
 
     try:
         fs_db.collection('AllToDo').document(todo_ID).delete()
         return "Item successfully deleted"
+
     except Exception:
         return "Item does not exist"
 
