@@ -12,7 +12,7 @@ jobs:
         runs-on: ubuntu-latest
         environment: deployment
         env:
-          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME_BACKEND }}
+          IMAGE_NAME: eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME_BACKEND }}
         steps:
 
         - name: Login
