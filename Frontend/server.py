@@ -47,6 +47,7 @@ def update(todo_id, title, content):
         id_token = google_id_token.fetch_id_token(auth_req, audience)
         res = requests.post('https://todoapp-backend-final-7qlre2lo3a-oa.a.run.app/update-todo', json=msg, headers={"Authorization": f"Bearer {id_token}"})
         return redirect(url_for("index"))
+
     else:
         return render_template("update.html", todo_id=todo_id, title=title, content=content)
 
